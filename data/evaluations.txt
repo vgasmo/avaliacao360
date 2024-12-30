@@ -1,0 +1,23 @@
+[
+  {
+    "evaluatorId": "2",
+    "evaluateeId": "3",
+    "timestamp": "2024-01-01T12:00:00.000Z",
+    "answers": {
+      "technical": {
+        "q1": "4",
+        "q2": "4",
+        "q3": "3",
+        "q4": "5",
+        "comment": "Muito bom na parte técnica."
+      },
+      "behavioral": {
+        "q5": "5",
+        "q6": "5",
+        "q7": "4",
+        "q8": "5",
+        "comment": "Excelente comunicação."
+      }
+    }
+  }
+]
