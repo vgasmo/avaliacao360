@@ -40,7 +40,7 @@ app.get('/resolve-token', (req, res) => {
 });
 
 // Google Apps Script Web App URL
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrsI7s3dts2c5PgvlzV1Yt-jog6DFkCJOFRfA5OsYLN__MVpiXlUrZL5PW94fTNc0/exec'; // Replace with your Web App URL
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx5msesGv0y6McArbndwcbs1Nehyx4Td7bYFquEd-Rp-1IdEmfj0Gccf9o9_--PLvro/exec'; // Replace with your Web App URL
 
 // Handle evaluation submission
 app.post('/submit-evaluation', async (req, res) => {
