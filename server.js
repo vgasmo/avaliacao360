@@ -3,71 +3,68 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const fetch = require('node-fetch');  // <-- Import fetch (Node <= 17)
+const fetch = require('node-fetch'); // Ensure node-fetch is installed
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Caminho para a pasta 'public' (onde está o index.html)
+// Path to the public folder (optional, for serving static files)
 const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
 
-// Ler os ficheiros JSON (employees e tokens)
+// Load employees and tokens JSON files
 const employees = JSON.parse(fs.readFileSync(path.join(__dirname, 'employees.json'), 'utf-8'));
 
 let tokens = {};
 try {
   tokens = JSON.parse(fs.readFileSync(path.join(__dirname, 'tokens.json'), 'utf-8'));
 } catch (err) {
-  console.log('Aviso: Não foi encontrado tokens.json ou ocorreu erro ao ler tokens.json:', err.message);
+  console.log('Warning: Could not find tokens.json or error reading it:', err.message);
   tokens = {};
 }
 
-// Rota para servir a lista de employees
+// Serve employees list
 app.get('/get-employees', (req, res) => {
   res.json(employees);
 });
 
-// Rota para converter token em myId
+// Resolve token to myId
 app.get('/resolve-token', (req, res) => {
   const token = req.query.token;
   const myId = tokens[token];
   if (!myId) {
-    return res.json({ myId: null });
+    return res.status(400).json({ error: 'Invalid token' });
   }
   res.json({ myId });
 });
 
-// ======================
-// URL do Google Apps Script
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrsI7s3dts2c5PgvlzV1Yt-jog6DFkCJOFRfA5OsYLN__MVpiXlUrZL5PW94fTNc0/exec'
-// ======================
+// Google Apps Script Web App URL
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrsI7s3dts2c5PgvlzV1Yt-jog6DFkCJOFRfA5OsYLN__MVpiXlUrZL5PW94fTNc0/exec'; // Replace with your Web App URL
 
-// Rota para receber a submissão
+// Handle evaluation submission
 app.post('/submit-evaluation', async (req, res) => {
   const { token, evaluateeId, timestamp, answers } = req.body;
-  
-  if (!token || !evaluateeId) {
-    return res.status(400).json({ error: 'Token ou evaluateeId em falta.' });
+
+  // Validate input
+  if (!token || !evaluateeId || !answers) {
+    return res.status(400).json({ error: 'Token, evaluateeId, or answers are missing.' });
   }
 
   const myId = tokens[token];
   if (!myId) {
-    return res.status(400).json({ error: 'Token inválido.' });
+    return res.status(400).json({ error: 'Invalid token.' });
   }
 
-  // Cria objeto de avaliação para guardar localmente
+  // Create evaluation object
   const evaluation = {
     evaluatorId: myId,
     evaluateeId,
-    timestamp,
+    timestamp: timestamp || new Date().toISOString(),
     answers
   };
 
-  // ===================================
-  // 1) Guardar no ficheiro local data/evaluations.json
-  // ===================================
+  // Save locally in data/evaluations.json
   const dataDir = path.join(__dirname, 'data');
   const evalFile = path.join(dataDir, 'evaluations.json');
 
@@ -83,47 +80,44 @@ app.post('/submit-evaluation', async (req, res) => {
   existingData.push(evaluation);
   fs.writeFileSync(evalFile, JSON.stringify(existingData, null, 2), 'utf-8');
 
-  // ===================================
-  // 2) Enviar para Google Sheets (via Google Apps Script)
-  // ===================================
-
-  // Montamos o objeto que será enviado para a sheet
-  // Ajuste conforme o script do Apps Script espera
+  // Send data to Google Apps Script
   const dataToSend = {
-    timestamp: timestamp,
-    evaluatorId: myId,
-    evaluateeId: evaluateeId,
-    answers: answers
+    timestamp: evaluation.timestamp,
+    evaluatorId: evaluation.evaluatorId,
+    evaluateeId: evaluation.evaluateeId,
+    answers: evaluation.answers
   };
 
   try {
-    // Fazemos o POST assíncrono para o Google Apps Script
-    // (Use await para esperar a resposta)
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dataToSend)
     });
-    const result = await response.json();
 
-    console.log('Resposta do Google Apps Script:', result);
+    const responseText = await response.text(); // Read raw response (for debugging)
+    console.log('Google Apps Script response (raw):', responseText);
 
-    // Retornar sucesso ao cliente
+    // Parse the response if it’s valid JSON
+    const result = JSON.parse(responseText);
+    console.log('Parsed Google Apps Script response:', result);
+
     return res.json({
-      message: 'Avaliação recebida e enviada para Google Sheets com sucesso!',
+      message: 'Evaluation successfully sent to Google Sheets!',
       googleScriptResponse: result
     });
   } catch (err) {
-    console.error('Erro ao enviar para Google Sheets:', err);
+    console.error('Error sending to Google Apps Script:', err.message);
+
     return res.status(500).json({
-      error: 'Avaliação gravada localmente, mas falhou ao enviar para Google Sheets'
+      error: 'Evaluation saved locally but failed to send to Google Sheets.',
+      details: err.message
     });
   }
 });
 
-// Iniciar servidor
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor a correr em http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
-
