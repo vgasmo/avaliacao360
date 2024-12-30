@@ -41,7 +41,7 @@ app.get('/resolve-token', (req, res) => {
 
 // ======================
 // URL do Google Apps Script
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkuroNIUzKF5UIEISsgY-8RFzpRfCyVW2AmZrHGLN7eTrl2AC5XVUbuLOKrUFG1G51/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrsI7s3dts2c5PgvlzV1Yt-jog6DFkCJOFRfA5OsYLN__MVpiXlUrZL5PW94fTNc0/exec'
 // ======================
 
 // Rota para receber a submissão
