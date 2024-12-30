@@ -40,8 +40,7 @@ app.get('/resolve-token', (req, res) => {
 });
 
 // Google Apps Script Web App URL
-const GOOGLE_SCRIPT_URL = ''; // Rhttps://script.google.com/macros/s/AKfycbwCxkcZkva47VEPhEBBo3d5rgF2Tzp7Weag8eS0TcNSW3HU5-Xm7w8YehIorPuUcZcS/execeplace with your Web App URL
-
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCxkcZkva47VEPhEBBo3d5rgF2Tzp7Weag8eS0TcNSW3HU5-Xm7w8YehIorPuUcZcS/exec'; 
 // Handle evaluation submission
 app.post('/submit-evaluation', async (req, res) => {
   const { token, evaluateeId, timestamp, answers } = req.body;
