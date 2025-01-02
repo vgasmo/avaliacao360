@@ -83,7 +83,7 @@ app.get('/resolve-token', (req, res) => {
 });
 
 // (Opcional) URL do Google Apps Script
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCxkcZkva47VEPhEBBo3d5rgF2Tzp7Weag8eS0TcNSW3HU5-Xm7w8YehIorPuUcZcS/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxhCf7t1Pl_y5qzJtqO8KbvtZ1_RRuku-ZIMGIop_zVlxoNy4Q3L5a_x8MOH0rKiEBF/exec';
 
 /**
  * Endpoint POST /submit-evaluation
