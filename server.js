@@ -14,7 +14,7 @@ const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
 
 // Load employees and tokens JSON files
-const employees = JSON.parse(fs.readFileSync(path.join(__dirname, 'employees.json'), 'utf-8'));
+const employees = JSON.parse(fs.readFileSync(path.join(__dirname, 'employees.json'), 'utf-8')).employees;
 
 let tokens = {};
 try {
@@ -40,7 +40,11 @@ app.get('/resolve-token', (req, res) => {
   // Find the user's name from their ID
   const myInfo = employees.find(emp => emp.id === myId);
 
-  res.json({ myId, myName: myInfo ? myInfo.name : 'Unknown' });
+  if (!myInfo) {
+    return res.status(404).json({ error: 'Employee not found.' });
+  }
+
+  res.json({ myId, myName: myInfo.name });
 });
 
 // Google Apps Script Web App URL
