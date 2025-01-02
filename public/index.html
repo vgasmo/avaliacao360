@@ -3,14 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Meta descrição para melhorar SEO e acessibilidade -->
-  <meta name="description" content="Formulário de Avaliação 360º da Startup Leiria. Avalie dimensões técnicas e comportamentais.">
-
+  <meta name="description" content="Formulário de Avaliação 360º da Startup Leiria.">
   <title>Avaliação 360º - Startup Leiria</title>
-
   <style>
-    /* Estilos básicos (pode mover para um arquivo styles.css se preferir) */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -53,7 +48,6 @@
 </head>
 
 <body>
-  <!-- Cabeçalho semântico -->
   <header>
     <h1>Avaliação 360º - Startup Leiria</h1>
   </header>
@@ -61,9 +55,8 @@
   <!-- Mensagens de alerta -->
   <div id="alertBox" class="alert" aria-live="polite"></div>
 
-  <!-- Conteúdo principal -->
   <main>
-    <!-- Seção para escolher o avaliado -->
+    <!-- Escolher avaliado -->
     <section class="form-section">
       <label for="evaluateeSelect">Selecione quem deseja avaliar (Avaliado):</label>
       <select id="evaluateeSelect" aria-label="Selecione um avaliado">
@@ -71,16 +64,14 @@
       </select>
     </section>
 
-    <!-- Dimensões Técnicas / Profissionais -->
+    <!-- Dimensões Técnicas -->
     <section id="technicalSection" class="form-section hidden">
       <h2>Dimensões Técnicas / Profissionais</h2>
       <div class="form-header">
         Apenas para gestor direto e/ou pares técnicos relevantes.
       </div>
 
-      <label for="q1">
-        1. Cumprimento de Objetivos e Metas
-      </label>
+      <label for="q1">1. Cumprimento de Objetivos e Metas</label>
       <select id="q1" aria-label="Cumprimento de Objetivos e Metas">
         <option value="1">1 - Muito abaixo</option>
         <option value="2">2</option>
@@ -89,9 +80,7 @@
         <option value="5">5 - Excelente</option>
       </select>
 
-      <label for="q2">
-        2. Qualidade e Rigor do Trabalho
-      </label>
+      <label for="q2">2. Qualidade e Rigor do Trabalho</label>
       <select id="q2" aria-label="Qualidade e Rigor do Trabalho">
         <option value="1">1 - Muito abaixo</option>
         <option value="2">2</option>
@@ -100,9 +89,7 @@
         <option value="5">5 - Excelente</option>
       </select>
 
-      <label for="q3">
-        3. Conhecimento Técnico / Especializado
-      </label>
+      <label for="q3">3. Conhecimento Técnico / Especializado</label>
       <select id="q3" aria-label="Conhecimento Técnico / Especializado">
         <option value="1">1 - Muito abaixo</option>
         <option value="2">2</option>
@@ -111,9 +98,7 @@
         <option value="5">5 - Excelente</option>
       </select>
 
-      <label for="q4">
-        4. Capacidade de Inovação e Melhoria Contínua
-      </label>
+      <label for="q4">4. Capacidade de Inovação e Melhoria Contínua</label>
       <select id="q4" aria-label="Capacidade de Inovação e Melhoria Contínua">
         <option value="1">1 - Muito abaixo</option>
         <option value="2">2</option>
@@ -138,9 +123,7 @@
         Avaliável por qualquer pessoa que trabalhe diretamente com o avaliado.
       </div>
 
-      <label for="q5">
-        5. Colaboração e Trabalho em Equipa
-      </label>
+      <label for="q5">5. Colaboração e Trabalho em Equipa</label>
       <select id="q5" aria-label="Colaboração e Trabalho em Equipa">
         <option value="1">1 - Muito abaixo</option>
         <option value="2">2</option>
@@ -149,9 +132,7 @@
         <option value="5">5 - Excelente</option>
       </select>
 
-      <label for="q6">
-        6. Comunicação
-      </label>
+      <label for="q6">6. Comunicação</label>
       <select id="q6" aria-label="Comunicação">
         <option value="1">1 - Muito abaixo</option>
         <option value="2">2</option>
@@ -160,9 +141,7 @@
         <option value="5">5 - Excelente</option>
       </select>
 
-      <label for="q7">
-        7. Proatividade e Resolução de Problemas
-      </label>
+      <label for="q7">7. Proatividade e Resolução de Problemas</label>
       <select id="q7" aria-label="Proatividade e Resolução de Problemas">
         <option value="1">1 - Muito abaixo</option>
         <option value="2">2</option>
@@ -171,9 +150,7 @@
         <option value="5">5 - Excelente</option>
       </select>
 
-      <label for="q8">
-        8. Alinhamento com os Valores/Cultura
-      </label>
+      <label for="q8">8. Alinhamento com os Valores/Cultura</label>
       <select id="q8" aria-label="Alinhamento com os Valores/Cultura">
         <option value="1">1 - Muito abaixo</option>
         <option value="2">2</option>
@@ -191,13 +168,13 @@
       />
     </section>
 
-    <!-- Botão de Submissão -->
+    <!-- Botão de Submeter -->
     <button id="submitBtn" aria-label="Submeter Avaliação">
       Submeter Avaliação
     </button>
   </main>
 
-  <!-- Scripts -->
+  <!-- script.js deve conter a lógica de token, exibição condicional etc. -->
   <script src="script.js"></script>
 </body>
 </html>
