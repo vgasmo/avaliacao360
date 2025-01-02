@@ -24,19 +24,23 @@ try {
   tokens = {};
 }
 
-// Serve employees list
+// Serve employees list, showing their name
 app.get('/get-employees', (req, res) => {
   res.json(employees);
 });
 
-// Resolve token to myId
+// Resolve token to get the evaluator's ID and name
 app.get('/resolve-token', (req, res) => {
   const token = req.query.token;
   const myId = tokens[token];
   if (!myId) {
     return res.status(400).json({ error: 'Invalid token' });
   }
-  res.json({ myId });
+
+  // Find the user's name from their ID
+  const myInfo = employees.find(emp => emp.id === myId);
+
+  res.json({ myId, myName: myInfo ? myInfo.name : 'Unknown' });
 });
 
 // Google Apps Script Web App URL
@@ -54,11 +58,6 @@ app.post('/submit-evaluation', async (req, res) => {
   const myId = tokens[token];
   if (!myId) {
     return res.status(400).json({ error: 'Invalid token.' });
-  }
-
-  // Check if self-assessment is allowed (evaluatorId === evaluateeId)
-  if (evaluateeId !== myId && !employees.find(emp => emp.id === evaluateeId)) {
-    return res.status(400).json({ error: 'Invalid evaluateeId. Self-assessment is allowed, or the evaluateeId must match an existing employee.' });
   }
 
   // Create evaluation object
