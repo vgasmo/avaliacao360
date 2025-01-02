@@ -14,18 +14,27 @@ const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
 
 // Load employees and tokens JSON files
-const employees = JSON.parse(fs.readFileSync(path.join(__dirname, 'employees.json'), 'utf-8')).employees;
+let employees = [];
+try {
+  employees = JSON.parse(fs.readFileSync(path.join(__dirname, 'employees.json'), 'utf-8')).employees;
+  console.log('Employees loaded successfully.');
+} catch (err) {
+  console.error('Error loading employees.json:', err.message);
+}
 
 let tokens = {};
 try {
   tokens = JSON.parse(fs.readFileSync(path.join(__dirname, 'tokens.json'), 'utf-8'));
+  console.log('Tokens loaded successfully.');
 } catch (err) {
-  console.log('Warning: Could not find tokens.json or error reading it:', err.message);
-  tokens = {};
+  console.error('Warning: Could not find tokens.json or error reading it:', err.message);
 }
 
-// Serve employees list, showing their name
+// Serve employees list
 app.get('/get-employees', (req, res) => {
+  if (!employees || employees.length === 0) {
+    return res.status(500).json({ error: 'Employees data is not available.' });
+  }
   res.json(employees);
 });
 
@@ -82,7 +91,11 @@ app.post('/submit-evaluation', async (req, res) => {
 
   let existingData = [];
   if (fs.existsSync(evalFile)) {
-    existingData = JSON.parse(fs.readFileSync(evalFile, 'utf-8'));
+    try {
+      existingData = JSON.parse(fs.readFileSync(evalFile, 'utf-8'));
+    } catch (err) {
+      console.error('Error reading evaluations.json:', err.message);
+    }
   }
 
   existingData.push(evaluation);
@@ -107,8 +120,14 @@ app.post('/submit-evaluation', async (req, res) => {
     console.log('Google Apps Script response (raw):', responseText);
 
     // Parse the response if it’s valid JSON
-    const result = JSON.parse(responseText);
-    console.log('Parsed Google Apps Script response:', result);
+    let result;
+    try {
+      result = JSON.parse(responseText);
+      console.log('Parsed Google Apps Script response:', result);
+    } catch (err) {
+      console.warn('Response is not valid JSON. Raw response:', responseText);
+      result = { rawResponse: responseText };
+    }
 
     return res.json({
       message: 'Evaluation successfully sent to Google Sheets!',
