@@ -1,35 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Avaliação 360º - Startup Leiria</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    .form-section { margin-bottom: 20px; }
-    .hidden { display: none; }
-    label { display: block; margin-top: 10px; }
-    select, input[type="text"] { width: 100%; max-width: 400px; padding: 6px; margin-top: 4px; }
-    button { margin-top: 20px; padding: 10px 15px; cursor: pointer; }
-    .alert { color: red; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .form-section {
+      margin-bottom: 20px;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      max-width: 400px;
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .alert {
+      color: red;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .success {
+      color: green;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <h1>Avaliação 360º - Startup Leiria</h1>
 
-  <div id="alertBox" class="alert"></div>
+  <div id="alertBox" class="alert hidden"></div>
+  <div id="successBox" class="success hidden"></div>
+
+  <div id="loading" class="hidden">Carregando dados, por favor aguarde...</div>
 
   <!-- Secção para escolher o avaliado -->
   <div class="form-section">
     <label for="evaluateeSelect">Selecione quem deseja avaliar (Avaliado):</label>
-    <select id="evaluateeSelect"></select>
+    <select id="evaluateeSelect">
+      <option value="" disabled selected>Selecione um avaliado</option>
+    </select>
   </div>
-  
-  <!-- Dimensões Técnicas (Aparece só se o avaliador tiver permissão) -->
+
+  <!-- Dimensões Técnicas -->
   <div id="technicalSection" class="form-section hidden">
     <h2>Dimensões Técnicas / Profissionais</h2>
-    <p>Apenas para gestor direto e/ou pares técnicos relevantes.</p>
-
-    <label for="q1">1. Cumprimento de Objetivos e Metas (1 - Muito abaixo | 5 - Excelente)</label>
+    <label for="q1">1. Cumprimento de Objetivos e Metas</label>
     <select id="q1">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -38,7 +91,7 @@
       <option value="5">5</option>
     </select>
 
-    <label for="q2">2. Qualidade e Rigor do Trabalho (1 - Muito abaixo | 5 - Excelente)</label>
+    <label for="q2">2. Qualidade e Rigor do Trabalho</label>
     <select id="q2">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -47,34 +100,14 @@
       <option value="5">5</option>
     </select>
 
-    <label for="q3">3. Conhecimento Técnico / Especializado (1 - Muito abaixo | 5 - Excelente)</label>
-    <select id="q3">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3" selected>3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-
-    <label for="q4">4. Capacidade de Inovação e Melhoria Contínua (1 - Muito abaixo | 5 - Excelente)</label>
-    <select id="q4">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3" selected>3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-
-    <label for="techComment">Comentário (opcional):</label>
-    <input type="text" id="techComment" placeholder="Detalhes sobre o desempenho técnico">
+    <label for="techComment">Comentário Técnico (opcional):</label>
+    <input type="text" id="techComment" placeholder="Comentários sobre o desempenho técnico">
   </div>
 
   <!-- Dimensões Comportamentais -->
   <div id="behavioralSection" class="form-section hidden">
-    <h2>Dimensões Comportamentais (Soft Skills)</h2>
-    <p>Todas as pessoas que trabalhem/interajam com o avaliado podem avaliar estas dimensões.</p>
-
-    <label for="q5">5. Colaboração e Trabalho em Equipa (1 - Muito abaixo | 5 - Excelente)</label>
+    <h2>Dimensões Comportamentais</h2>
+    <label for="q5">5. Colaboração e Trabalho em Equipa</label>
     <select id="q5">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -83,7 +116,7 @@
       <option value="5">5</option>
     </select>
 
-    <label for="q6">6. Comunicação (1 - Muito abaixo | 5 - Excelente)</label>
+    <label for="q6">6. Comunicação</label>
     <select id="q6">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -92,191 +125,154 @@
       <option value="5">5</option>
     </select>
 
-    <label for="q7">7. Proatividade e Resolução de Problemas (1 - Muito abaixo | 5 - Excelente)</label>
-    <select id="q7">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3" selected>3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-
-    <label for="q8">8. Alinhamento com os Valores/Cultura (1 - Muito abaixo | 5 - Excelente)</label>
-    <select id="q8">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3" selected>3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-
-    <label for="behavioralComment">Comentário (opcional):</label>
-    <input type="text" id="behavioralComment" placeholder="Detalhes sobre o desempenho comportamental">
+    <label for="behavioralComment">Comentário Comportamental (opcional):</label>
+    <input type="text" id="behavioralComment" placeholder="Comentários sobre soft skills">
   </div>
 
   <button id="submitBtn">Submeter Avaliação</button>
 
   <script>
     let employeesData = [];
-    let myId = null; // Quem é o avaliador, detectado pelo token
+    let myId = null;
     let token = null;
 
     window.onload = () => {
-      // Ler o token da query string (ex: ?token=ABC123)
       const params = new URLSearchParams(window.location.search);
       token = params.get('token');
 
       if (!token) {
-        document.getElementById('alertBox').innerText = 
-          'Falta o token na URL. Peça ao CEO um link correto.';
-        document.getElementById('evaluateeSelect').disabled = true;
-        document.getElementById('submitBtn').disabled = true;
+        showError('Falta o token na URL. Peça ao administrador um link correto.');
+        disableForm();
         return;
       }
 
-      // Vamos buscar a lista de funcionários + descobrir meu ID via token
+      document.getElementById('loading').classList.remove('hidden');
+
       fetch('/get-employees')
         .then(res => res.json())
         .then(data => {
-          employeesData = data.employees;
-
-          // Descobrir o meu ID (avaliador) no servidor
-          return fetch('/resolve-token?token=' + token);
+          employeesData = data;
+          return fetch(`/resolve-token?token=${token}`);
         })
         .then(res => res.json())
         .then(tokenResp => {
           myId = tokenResp.myId;
           if (!myId) {
-            document.getElementById('alertBox').innerText = 
-              'Token inválido. Contate o CEO.';
-            document.getElementById('evaluateeSelect').disabled = true;
-            document.getElementById('submitBtn').disabled = true;
+            showError('Token inválido. Contacte o administrador.');
+            disableForm();
             return;
           }
 
-          // Agora populamos o dropdown de avaliados (excluindo a mim próprio)
-          populateEvaluateeSelect(employeesData, myId);
+          populateEvaluateeSelect();
         })
         .catch(err => {
           console.error(err);
-          document.getElementById('alertBox').innerText = 
-            'Erro ao carregar dados. Tente novamente mais tarde.';
+          showError('Erro ao carregar dados. Tente novamente mais tarde.');
+        })
+        .finally(() => {
+          document.getElementById('loading').classList.add('hidden');
         });
 
-      document.getElementById('evaluateeSelect')
-        .addEventListener('change', showRelevantSections);
-
-      document.getElementById('submitBtn')
-        .addEventListener('click', handleSubmit);
+      document.getElementById('evaluateeSelect').addEventListener('change', showRelevantSections);
+      document.getElementById('submitBtn').addEventListener('click', handleSubmit);
     };
 
-    function populateEvaluateeSelect(employees, myId) {
-      const evaluateeSelect = document.getElementById('evaluateeSelect');
-      evaluateeSelect.innerHTML = '';
+    function showError(message) {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.textContent = message;
+      alertBox.classList.remove('hidden');
+    }
 
-      const possibleEvaluatees = employees.filter(e => e.id !== myId);
-      possibleEvaluatees.forEach(emp => {
+    function showSuccess(message) {
+      const successBox = document.getElementById('successBox');
+      successBox.textContent = message;
+      successBox.classList.remove('hidden');
+    }
+
+    function disableForm() {
+      document.getElementById('evaluateeSelect').disabled = true;
+      document.getElementById('submitBtn').disabled = true;
+    }
+
+    function populateEvaluateeSelect() {
+      const evaluateeSelect = document.getElementById('evaluateeSelect');
+      employeesData.filter(emp => emp.id !== myId).forEach(emp => {
         const option = document.createElement('option');
         option.value = emp.id;
-        option.textContent = emp.name + ' (' + emp.role + ')';
+        option.textContent = `${emp.name} (${emp.role})`;
         evaluateeSelect.appendChild(option);
       });
     }
 
     function showRelevantSections() {
       const evaluateeId = document.getElementById('evaluateeSelect').value;
-      const evaluator = employeesData.find(e => e.id === myId);
       const evaluatee = employeesData.find(e => e.id === evaluateeId);
 
       if (!evaluatee) return;
 
-      // Dimensão Técnica?
-      const isManager = (evaluatee.managerId === myId);
+      const isManager = evaluatee.managerId === myId;
       const isTechnicalPeer = evaluatee.technicalPeers.includes(myId);
-
-      const technicalSection = document.getElementById('technicalSection');
-      if (isManager || isTechnicalPeer) {
-        technicalSection.classList.remove('hidden');
-      } else {
-        technicalSection.classList.add('hidden');
-      }
-
-      // Dimensão Comportamental?
       const isBehavioralPeer = evaluatee.behavioralPeers.includes(myId);
-      const behavioralSection = document.getElementById('behavioralSection');
-      if (isBehavioralPeer) {
-        behavioralSection.classList.remove('hidden');
+
+      toggleVisibility('technicalSection', isManager || isTechnicalPeer);
+      toggleVisibility('behavioralSection', isBehavioralPeer);
+    }
+
+    function toggleVisibility(sectionId, shouldShow) {
+      const section = document.getElementById(sectionId);
+      if (shouldShow) {
+        section.classList.remove('hidden');
       } else {
-        behavioralSection.classList.add('hidden');
+        section.classList.add('hidden');
       }
     }
 
     function handleSubmit() {
       const evaluateeId = document.getElementById('evaluateeSelect').value;
-
       if (!evaluateeId) {
         alert('Por favor, selecione um avaliado.');
         return;
       }
 
       const dataToSubmit = {
-        token: token, // para o servidor saber quem sou, mas não visível para mim
+        token: token,
         evaluateeId: evaluateeId,
         timestamp: new Date().toISOString(),
         answers: {}
       };
 
-      // Se a secção técnica estiver visível, recolhe as respostas
       if (!document.getElementById('technicalSection').classList.contains('hidden')) {
         dataToSubmit.answers.technical = {
           q1: document.getElementById('q1').value,
           q2: document.getElementById('q2').value,
-          q3: document.getElementById('q3').value,
-          q4: document.getElementById('q4').value,
           comment: document.getElementById('techComment').value
         };
       }
 
-      // Se a secção comportamental estiver visível, recolhe as respostas
       if (!document.getElementById('behavioralSection').classList.contains('hidden')) {
         dataToSubmit.answers.behavioral = {
           q5: document.getElementById('q5').value,
           q6: document.getElementById('q6').value,
-          q7: document.getElementById('q7').value,
-          q8: document.getElementById('q8').value,
           comment: document.getElementById('behavioralComment').value
         };
       }
 
-      // Enviar para o servidor
       fetch('/submit-evaluation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dataToSubmit)
       })
-      .then(res => {
-        if (res.ok) {
-          alert('Avaliação submetida com sucesso!');
-          // Limpar formulário (opcional)
-          document.getElementById('q1').value = 3;
-          document.getElementById('q2').value = 3;
-          document.getElementById('q3').value = 3;
-          document.getElementById('q4').value = 3;
-          document.getElementById('techComment').value = '';
-
-          document.getElementById('q5').value = 3;
-          document.getElementById('q6').value = 3;
-          document.getElementById('q7').value = 3;
-          document.getElementById('q8').value = 3;
-          document.getElementById('behavioralComment').value = '';
-        } else {
-          alert('Ocorreu um erro ao submeter. Tente novamente.');
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Ocorreu um erro ao submeter. Ver console.');
-      });
+        .then(res => {
+          if (res.ok) {
+            showSuccess('Avaliação submetida com sucesso!');
+          } else {
+            alert('Erro ao submeter. Tente novamente.');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Erro ao submeter. Ver console para mais detalhes.');
+        });
     }
   </script>
 </body>
