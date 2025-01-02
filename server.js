@@ -9,22 +9,32 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Path to the public folder (optional, for serving static files)
+// Path to the public folder for serving static files
 const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
 
+// Helper function to ensure a directory exists
+const ensureDirExists = (dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+};
+
 // Load employees and tokens JSON files
 let employees = [];
+let tokens = {};
+
 try {
-  employees = JSON.parse(fs.readFileSync(path.join(__dirname, 'employees.json'), 'utf-8')).employees;
+  const employeesPath = path.join(__dirname, 'employees.json');
+  employees = JSON.parse(fs.readFileSync(employeesPath, 'utf-8')).employees;
   console.log('Employees loaded successfully.');
 } catch (err) {
   console.error('Error loading employees.json:', err.message);
 }
 
-let tokens = {};
 try {
-  tokens = JSON.parse(fs.readFileSync(path.join(__dirname, 'tokens.json'), 'utf-8'));
+  const tokensPath = path.join(__dirname, 'tokens.json');
+  tokens = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
   console.log('Tokens loaded successfully.');
 } catch (err) {
   console.error('Warning: Could not find tokens.json or error reading it:', err.message);
@@ -35,7 +45,7 @@ app.get('/get-employees', (req, res) => {
   if (!employees || employees.length === 0) {
     return res.status(500).json({ error: 'Employees data is not available.' });
   }
-  res.json(employees);
+  res.json({ employees });
 });
 
 // Endpoint: Resolve token to get evaluator's ID and name
@@ -50,9 +60,9 @@ app.get('/resolve-token', (req, res) => {
     return res.status(400).json({ error: 'Invalid token.' });
   }
 
-  const myInfo = employees.find(emp => emp.id === myId);
+  const myInfo = employees.find((emp) => emp.id === myId);
   if (!myInfo) {
-    return res.status(404).json({ error: 'Employee not found for the provided token.' });
+    return res.status(404).json({ error: 'Employee not found for the provided token.', myId });
   }
 
   res.json({ myId, myName: myInfo.name });
@@ -76,7 +86,7 @@ app.post('/submit-evaluation', async (req, res) => {
   }
 
   // Validate evaluateeId
-  const evaluatee = employees.find(emp => emp.id === evaluateeId);
+  const evaluatee = employees.find((emp) => emp.id === evaluateeId);
   if (!evaluatee) {
     return res.status(400).json({ error: 'Invalid evaluateeId.' });
   }
@@ -97,10 +107,7 @@ app.post('/submit-evaluation', async (req, res) => {
   // Save locally in data/evaluations.json
   const dataDir = path.join(__dirname, 'data');
   const evalFile = path.join(dataDir, 'evaluations.json');
-
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir);
-  }
+  ensureDirExists(dataDir);
 
   let existingData = [];
   if (fs.existsSync(evalFile)) {
@@ -132,7 +139,6 @@ app.post('/submit-evaluation', async (req, res) => {
     const responseText = await response.text();
     console.log('Google Apps Script response (raw):', responseText);
 
-    // Parse the response if it’s valid JSON
     let result;
     try {
       result = JSON.parse(responseText);
