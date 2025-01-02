@@ -30,7 +30,7 @@ try {
   console.error('Warning: Could not find tokens.json or error reading it:', err.message);
 }
 
-// Serve employees list
+// Endpoint: Get employees list
 app.get('/get-employees', (req, res) => {
   if (!employees || employees.length === 0) {
     return res.status(500).json({ error: 'Employees data is not available.' });
@@ -38,19 +38,21 @@ app.get('/get-employees', (req, res) => {
   res.json(employees);
 });
 
-// Resolve token to get the evaluator's ID and name
+// Endpoint: Resolve token to get evaluator's ID and name
 app.get('/resolve-token', (req, res) => {
   const token = req.query.token;
+  if (!token) {
+    return res.status(400).json({ error: 'Token is required.' });
+  }
+
   const myId = tokens[token];
   if (!myId) {
     return res.status(400).json({ error: 'Invalid token.' });
   }
 
-  // Find the user's name from their ID
   const myInfo = employees.find(emp => emp.id === myId);
-
   if (!myInfo) {
-    return res.status(404).json({ error: 'Employee not found.' });
+    return res.status(404).json({ error: 'Employee not found for the provided token.' });
   }
 
   res.json({ myId, myName: myInfo.name });
@@ -59,7 +61,7 @@ app.get('/resolve-token', (req, res) => {
 // Google Apps Script Web App URL
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCxkcZkva47VEPhEBBo3d5rgF2Tzp7Weag8eS0TcNSW3HU5-Xm7w8YehIorPuUcZcS/exec';
 
-// Handle evaluation submission
+// Endpoint: Handle evaluation submission
 app.post('/submit-evaluation', async (req, res) => {
   const { token, evaluateeId, timestamp, answers } = req.body;
 
@@ -79,7 +81,7 @@ app.post('/submit-evaluation', async (req, res) => {
     return res.status(400).json({ error: 'Invalid evaluateeId.' });
   }
 
-  // Validate answers structure (optional, depending on your requirements)
+  // Validate answers structure
   if (typeof answers !== 'object' || Object.keys(answers).length === 0) {
     return res.status(400).json({ error: 'Answers are missing or invalid.' });
   }
@@ -89,7 +91,7 @@ app.post('/submit-evaluation', async (req, res) => {
     evaluatorId: myId,
     evaluateeId,
     timestamp: timestamp || new Date().toISOString(),
-    answers
+    answers,
   };
 
   // Save locally in data/evaluations.json
@@ -117,17 +119,17 @@ app.post('/submit-evaluation', async (req, res) => {
     timestamp: evaluation.timestamp,
     evaluatorId: evaluation.evaluatorId,
     evaluateeId: evaluation.evaluateeId,
-    answers: evaluation.answers
+    answers: evaluation.answers,
   };
 
   try {
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dataToSend)
+      body: JSON.stringify(dataToSend),
     });
 
-    const responseText = await response.text(); // Read raw response (for debugging)
+    const responseText = await response.text();
     console.log('Google Apps Script response (raw):', responseText);
 
     // Parse the response if it’s valid JSON
@@ -142,14 +144,14 @@ app.post('/submit-evaluation', async (req, res) => {
 
     return res.json({
       message: 'Evaluation successfully sent to Google Sheets!',
-      googleScriptResponse: result
+      googleScriptResponse: result,
     });
   } catch (err) {
     console.error('Error sending to Google Apps Script:', err.message);
 
     return res.status(500).json({
       error: 'Evaluation saved locally but failed to send to Google Sheets.',
-      details: err.message
+      details: err.message,
     });
   }
 });
