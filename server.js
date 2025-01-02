@@ -40,7 +40,8 @@ app.get('/resolve-token', (req, res) => {
 });
 
 // Google Apps Script Web App URL
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCxkcZkva47VEPhEBBo3d5rgF2Tzp7Weag8eS0TcNSW3HU5-Xm7w8YehIorPuUcZcS/exec'; 
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCxkcZkva47VEPhEBBo3d5rgF2Tzp7Weag8eS0TcNSW3HU5-Xm7w8YehIorPuUcZcS/exec';
+
 // Handle evaluation submission
 app.post('/submit-evaluation', async (req, res) => {
   const { token, evaluateeId, timestamp, answers } = req.body;
@@ -53,6 +54,11 @@ app.post('/submit-evaluation', async (req, res) => {
   const myId = tokens[token];
   if (!myId) {
     return res.status(400).json({ error: 'Invalid token.' });
+  }
+
+  // Check if self-assessment is allowed (evaluatorId === evaluateeId)
+  if (evaluateeId !== myId && !employees.find(emp => emp.id === evaluateeId)) {
+    return res.status(400).json({ error: 'Invalid evaluateeId. Self-assessment is allowed, or the evaluateeId must match an existing employee.' });
   }
 
   // Create evaluation object
