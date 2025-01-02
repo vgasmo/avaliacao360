@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Meta descrição para melhorar SEO e acessibilidade -->
+  <meta name="description" content="Formulário de Avaliação 360º da Startup Leiria. Avalie dimensões técnicas e comportamentais.">
+
   <title>Avaliação 360º - Startup Leiria</title>
+
   <style>
+    /* Estilos básicos (pode mover para um arquivo styles.css se preferir) */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
+      line-height: 1.4;
     }
     .form-section {
       margin-bottom: 20px;
@@ -39,114 +46,158 @@
       font-weight: bold;
       margin-bottom: 10px;
     }
+    h1 {
+      margin-bottom: 10px;
+    }
   </style>
 </head>
+
 <body>
-  <h1>Avaliação 360º - Startup Leiria</h1>
+  <!-- Cabeçalho semântico -->
+  <header>
+    <h1>Avaliação 360º - Startup Leiria</h1>
+  </header>
 
-  <div id="alertBox" class="alert"></div>
+  <!-- Mensagens de alerta -->
+  <div id="alertBox" class="alert" aria-live="polite"></div>
 
-  <!-- Dropdown to select the evaluatee -->
-  <div class="form-section">
-    <label for="evaluateeSelect">Selecione quem deseja avaliar (Avaliado):</label>
-    <select id="evaluateeSelect" aria-label="Selecione um avaliado">
-      <option value="">-- Escolha um avaliado --</option>
-    </select>
-  </div>
+  <!-- Conteúdo principal -->
+  <main>
+    <!-- Seção para escolher o avaliado -->
+    <section class="form-section">
+      <label for="evaluateeSelect">Selecione quem deseja avaliar (Avaliado):</label>
+      <select id="evaluateeSelect" aria-label="Selecione um avaliado">
+        <option value="">-- Escolha um avaliado --</option>
+      </select>
+    </section>
 
-  <!-- Technical dimensions -->
-  <div id="technicalSection" class="form-section hidden">
-    <h2>Dimensões Técnicas / Profissionais</h2>
-    <div class="form-header">Apenas para gestor direto e/ou pares técnicos relevantes.</div>
+    <!-- Dimensões Técnicas / Profissionais -->
+    <section id="technicalSection" class="form-section hidden">
+      <h2>Dimensões Técnicas / Profissionais</h2>
+      <div class="form-header">
+        Apenas para gestor direto e/ou pares técnicos relevantes.
+      </div>
 
-    <label for="q1">1. Cumprimento de Objetivos e Metas</label>
-    <select id="q1" aria-label="Cumprimento de Objetivos e Metas">
-      <option value="1">1 - Muito abaixo</option>
-      <option value="2">2</option>
-      <option value="3" selected>3 - Mediano</option>
-      <option value="4">4</option>
-      <option value="5">5 - Excelente</option>
-    </select>
+      <label for="q1">
+        1. Cumprimento de Objetivos e Metas
+      </label>
+      <select id="q1" aria-label="Cumprimento de Objetivos e Metas">
+        <option value="1">1 - Muito abaixo</option>
+        <option value="2">2</option>
+        <option value="3" selected>3 - Mediano</option>
+        <option value="4">4</option>
+        <option value="5">5 - Excelente</option>
+      </select>
 
-    <label for="q2">2. Qualidade e Rigor do Trabalho</label>
-    <select id="q2" aria-label="Qualidade e Rigor do Trabalho">
-      <option value="1">1 - Muito abaixo</option>
-      <option value="2">2</option>
-      <option value="3" selected>3 - Mediano</option>
-      <option value="4">4</option>
-      <option value="5">5 - Excelente</option>
-    </select>
+      <label for="q2">
+        2. Qualidade e Rigor do Trabalho
+      </label>
+      <select id="q2" aria-label="Qualidade e Rigor do Trabalho">
+        <option value="1">1 - Muito abaixo</option>
+        <option value="2">2</option>
+        <option value="3" selected>3 - Mediano</option>
+        <option value="4">4</option>
+        <option value="5">5 - Excelente</option>
+      </select>
 
-    <label for="q3">3. Conhecimento Técnico / Especializado</label>
-    <select id="q3" aria-label="Conhecimento Técnico / Especializado">
-      <option value="1">1 - Muito abaixo</option>
-      <option value="2">2</option>
-      <option value="3" selected>3 - Mediano</option>
-      <option value="4">4</option>
-      <option value="5">5 - Excelente</option>
-    </select>
+      <label for="q3">
+        3. Conhecimento Técnico / Especializado
+      </label>
+      <select id="q3" aria-label="Conhecimento Técnico / Especializado">
+        <option value="1">1 - Muito abaixo</option>
+        <option value="2">2</option>
+        <option value="3" selected>3 - Mediano</option>
+        <option value="4">4</option>
+        <option value="5">5 - Excelente</option>
+      </select>
 
-    <label for="q4">4. Capacidade de Inovação e Melhoria Contínua</label>
-    <select id="q4" aria-label="Capacidade de Inovação e Melhoria Contínua">
-      <option value="1">1 - Muito abaixo</option>
-      <option value="2">2</option>
-      <option value="3" selected>3 - Mediano</option>
-      <option value="4">4</option>
-      <option value="5">5 - Excelente</option>
-    </select>
+      <label for="q4">
+        4. Capacidade de Inovação e Melhoria Contínua
+      </label>
+      <select id="q4" aria-label="Capacidade de Inovação e Melhoria Contínua">
+        <option value="1">1 - Muito abaixo</option>
+        <option value="2">2</option>
+        <option value="3" selected>3 - Mediano</option>
+        <option value="4">4</option>
+        <option value="5">5 - Excelente</option>
+      </select>
 
-    <label for="techComment">Comentário (opcional):</label>
-    <input type="text" id="techComment" placeholder="Detalhes sobre o desempenho técnico" aria-label="Comentário técnico" />
-  </div>
+      <label for="techComment">Comentário (opcional):</label>
+      <input
+        type="text"
+        id="techComment"
+        placeholder="Detalhes sobre o desempenho técnico"
+        aria-label="Comentário técnico"
+      />
+    </section>
 
-  <!-- Behavioral dimensions -->
-  <div id="behavioralSection" class="form-section hidden">
-    <h2>Dimensões Comportamentais (Soft Skills)</h2>
-    <div class="form-header">Avaliável por qualquer pessoa que trabalhe diretamente com o avaliado.</div>
+    <!-- Dimensões Comportamentais -->
+    <section id="behavioralSection" class="form-section hidden">
+      <h2>Dimensões Comportamentais (Soft Skills)</h2>
+      <div class="form-header">
+        Avaliável por qualquer pessoa que trabalhe diretamente com o avaliado.
+      </div>
 
-    <label for="q5">5. Colaboração e Trabalho em Equipa</label>
-    <select id="q5" aria-label="Colaboração e Trabalho em Equipa">
-      <option value="1">1 - Muito abaixo</option>
-      <option value="2">2</option>
-      <option value="3" selected>3 - Mediano</option>
-      <option value="4">4</option>
-      <option value="5">5 - Excelente</option>
-    </select>
+      <label for="q5">
+        5. Colaboração e Trabalho em Equipa
+      </label>
+      <select id="q5" aria-label="Colaboração e Trabalho em Equipa">
+        <option value="1">1 - Muito abaixo</option>
+        <option value="2">2</option>
+        <option value="3" selected>3 - Mediano</option>
+        <option value="4">4</option>
+        <option value="5">5 - Excelente</option>
+      </select>
 
-    <label for="q6">6. Comunicação</label>
-    <select id="q6" aria-label="Comunicação">
-      <option value="1">1 - Muito abaixo</option>
-      <option value="2">2</option>
-      <option value="3" selected>3 - Mediano</option>
-      <option value="4">4</option>
-      <option value="5">5 - Excelente</option>
-    </select>
+      <label for="q6">
+        6. Comunicação
+      </label>
+      <select id="q6" aria-label="Comunicação">
+        <option value="1">1 - Muito abaixo</option>
+        <option value="2">2</option>
+        <option value="3" selected>3 - Mediano</option>
+        <option value="4">4</option>
+        <option value="5">5 - Excelente</option>
+      </select>
 
-    <label for="q7">7. Proatividade e Resolução de Problemas</label>
-    <select id="q7" aria-label="Proatividade e Resolução de Problemas">
-      <option value="1">1 - Muito abaixo</option>
-      <option value="2">2</option>
-      <option value="3" selected>3 - Mediano</option>
-      <option value="4">4</option>
-      <option value="5">5 - Excelente</option>
-    </select>
+      <label for="q7">
+        7. Proatividade e Resolução de Problemas
+      </label>
+      <select id="q7" aria-label="Proatividade e Resolução de Problemas">
+        <option value="1">1 - Muito abaixo</option>
+        <option value="2">2</option>
+        <option value="3" selected>3 - Mediano</option>
+        <option value="4">4</option>
+        <option value="5">5 - Excelente</option>
+      </select>
 
-    <label for="q8">8. Alinhamento com os Valores/Cultura</label>
-    <select id="q8" aria-label="Alinhamento com os Valores/Cultura">
-      <option value="1">1 - Muito abaixo</option>
-      <option value="2">2</option>
-      <option value="3" selected>3 - Mediano</option>
-      <option value="4">4</option>
-      <option value="5">5 - Excelente</option>
-    </select>
+      <label for="q8">
+        8. Alinhamento com os Valores/Cultura
+      </label>
+      <select id="q8" aria-label="Alinhamento com os Valores/Cultura">
+        <option value="1">1 - Muito abaixo</option>
+        <option value="2">2</option>
+        <option value="3" selected>3 - Mediano</option>
+        <option value="4">4</option>
+        <option value="5">5 - Excelente</option>
+      </select>
 
-    <label for="behavioralComment">Comentário (opcional):</label>
-    <input type="text" id="behavioralComment" placeholder="Detalhes sobre o desempenho comportamental" aria-label="Comentário comportamental" />
-  </div>
+      <label for="behavioralComment">Comentário (opcional):</label>
+      <input
+        type="text"
+        id="behavioralComment"
+        placeholder="Detalhes sobre o desempenho comportamental"
+        aria-label="Comentário comportamental"
+      />
+    </section>
 
-  <!-- Submit button -->
-  <button id="submitBtn" aria-label="Submeter Avaliação">Submeter Avaliação</button>
+    <!-- Botão de Submissão -->
+    <button id="submitBtn" aria-label="Submeter Avaliação">
+      Submeter Avaliação
+    </button>
+  </main>
 
+  <!-- Scripts -->
   <script src="script.js"></script>
 </body>
 </html>
