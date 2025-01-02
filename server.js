@@ -43,7 +43,7 @@ app.get('/resolve-token', (req, res) => {
   const token = req.query.token;
   const myId = tokens[token];
   if (!myId) {
-    return res.status(400).json({ error: 'Invalid token' });
+    return res.status(400).json({ error: 'Invalid token.' });
   }
 
   // Find the user's name from their ID
@@ -71,6 +71,17 @@ app.post('/submit-evaluation', async (req, res) => {
   const myId = tokens[token];
   if (!myId) {
     return res.status(400).json({ error: 'Invalid token.' });
+  }
+
+  // Validate evaluateeId
+  const evaluatee = employees.find(emp => emp.id === evaluateeId);
+  if (!evaluatee) {
+    return res.status(400).json({ error: 'Invalid evaluateeId.' });
+  }
+
+  // Validate answers structure (optional, depending on your requirements)
+  if (typeof answers !== 'object' || Object.keys(answers).length === 0) {
+    return res.status(400).json({ error: 'Answers are missing or invalid.' });
   }
 
   // Create evaluation object
