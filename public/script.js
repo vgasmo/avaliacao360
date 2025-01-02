@@ -14,12 +14,19 @@ window.onload = async () => {
     alertBox.textContent = 'Error loading employees. Please try again later.';
   }
 };
+function populateEvaluateeSelect(employees) {
+  const evaluateeSelect = document.getElementById('evaluateeSelect');
+  evaluateeSelect.innerHTML = ''; // Clear previous options
 
-function populateDropdown(employees) {
-  if (!Array.isArray(employees) || employees.length === 0) {
-    alertBox.textContent = 'No employees available for evaluation.';
+  if (!employees || employees.length === 0) {
+    document.getElementById('alertBox').innerText = 'No employees available for evaluation.';
     return;
   }
+
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.textContent = '-- Escolha um avaliado --';
+  evaluateeSelect.appendChild(defaultOption);
 
   employees.forEach(employee => {
     const option = document.createElement('option');
