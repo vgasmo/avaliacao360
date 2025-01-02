@@ -49,7 +49,7 @@
   <!-- Dropdown to select the evaluatee -->
   <div class="form-section">
     <label for="evaluateeSelect">Selecione quem deseja avaliar (Avaliado):</label>
-    <select id="evaluateeSelect">
+    <select id="evaluateeSelect" aria-label="Selecione um avaliado">
       <option value="">-- Escolha um avaliado --</option>
     </select>
   </div>
@@ -60,7 +60,7 @@
     <div class="form-header">Apenas para gestor direto e/ou pares técnicos relevantes.</div>
 
     <label for="q1">1. Cumprimento de Objetivos e Metas</label>
-    <select id="q1">
+    <select id="q1" aria-label="Cumprimento de Objetivos e Metas">
       <option value="1">1 - Muito abaixo</option>
       <option value="2">2</option>
       <option value="3" selected>3 - Mediano</option>
@@ -69,7 +69,7 @@
     </select>
 
     <label for="q2">2. Qualidade e Rigor do Trabalho</label>
-    <select id="q2">
+    <select id="q2" aria-label="Qualidade e Rigor do Trabalho">
       <option value="1">1 - Muito abaixo</option>
       <option value="2">2</option>
       <option value="3" selected>3 - Mediano</option>
@@ -78,7 +78,7 @@
     </select>
 
     <label for="q3">3. Conhecimento Técnico / Especializado</label>
-    <select id="q3">
+    <select id="q3" aria-label="Conhecimento Técnico / Especializado">
       <option value="1">1 - Muito abaixo</option>
       <option value="2">2</option>
       <option value="3" selected>3 - Mediano</option>
@@ -87,7 +87,7 @@
     </select>
 
     <label for="q4">4. Capacidade de Inovação e Melhoria Contínua</label>
-    <select id="q4">
+    <select id="q4" aria-label="Capacidade de Inovação e Melhoria Contínua">
       <option value="1">1 - Muito abaixo</option>
       <option value="2">2</option>
       <option value="3" selected>3 - Mediano</option>
@@ -96,7 +96,7 @@
     </select>
 
     <label for="techComment">Comentário (opcional):</label>
-    <input type="text" id="techComment" placeholder="Detalhes sobre o desempenho técnico" />
+    <input type="text" id="techComment" placeholder="Detalhes sobre o desempenho técnico" aria-label="Comentário técnico" />
   </div>
 
   <!-- Behavioral dimensions -->
@@ -105,7 +105,7 @@
     <div class="form-header">Avaliável por qualquer pessoa que trabalhe diretamente com o avaliado.</div>
 
     <label for="q5">5. Colaboração e Trabalho em Equipa</label>
-    <select id="q5">
+    <select id="q5" aria-label="Colaboração e Trabalho em Equipa">
       <option value="1">1 - Muito abaixo</option>
       <option value="2">2</option>
       <option value="3" selected>3 - Mediano</option>
@@ -114,7 +114,7 @@
     </select>
 
     <label for="q6">6. Comunicação</label>
-    <select id="q6">
+    <select id="q6" aria-label="Comunicação">
       <option value="1">1 - Muito abaixo</option>
       <option value="2">2</option>
       <option value="3" selected>3 - Mediano</option>
@@ -123,7 +123,7 @@
     </select>
 
     <label for="q7">7. Proatividade e Resolução de Problemas</label>
-    <select id="q7">
+    <select id="q7" aria-label="Proatividade e Resolução de Problemas">
       <option value="1">1 - Muito abaixo</option>
       <option value="2">2</option>
       <option value="3" selected>3 - Mediano</option>
@@ -132,7 +132,7 @@
     </select>
 
     <label for="q8">8. Alinhamento com os Valores/Cultura</label>
-    <select id="q8">
+    <select id="q8" aria-label="Alinhamento com os Valores/Cultura">
       <option value="1">1 - Muito abaixo</option>
       <option value="2">2</option>
       <option value="3" selected>3 - Mediano</option>
@@ -141,11 +141,11 @@
     </select>
 
     <label for="behavioralComment">Comentário (opcional):</label>
-    <input type="text" id="behavioralComment" placeholder="Detalhes sobre o desempenho comportamental" />
+    <input type="text" id="behavioralComment" placeholder="Detalhes sobre o desempenho comportamental" aria-label="Comentário comportamental" />
   </div>
 
   <!-- Submit button -->
-  <button id="submitBtn">Submeter Avaliação</button>
+  <button id="submitBtn" aria-label="Submeter Avaliação">Submeter Avaliação</button>
 
   <script src="script.js"></script>
 </body>
